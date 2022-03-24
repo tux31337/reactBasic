@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js" integrity="sha512-kp7YHLxuJDJcOzStgd6vtpxr4ZU9kjn77e6dBsivSz+pUuAuMlE2UTdKB7jjsWT84qbS8kdCWHPETnP/ctrFsA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        class GuGuDan extends React.Component {
+            state = {
+                first: Math.ceil(Math.random() * 9),
+                second: Math.ceil(Math.random() * 9),
+                value: '',
+                result: '',
+            }
+            
+
+            onClick= (event) => {
+                            if (parseInt(this.state.value) === this.state.first * this.state.second) {
+                                this.setState({
+                                    result: `정답은 ${this.state.first * this.state.second} 입니다`,
+                                    first: Math.ceil(Math.random() * 9),
+                                    second: Math.ceil(Math.random() * 9),
+                                    value: '',
+                                })
+                                this.input.focus();
+                            } else {
+                                this.setState({
+                                    result: '틀렸습니다',
+                                    value: '',
+                                })
+                                this.input.focus();
+                            }
+            }
+
+            onRefInput = (c) => { this.input = c; };
+
+            render() {
+                console.log("랜더링");
+                return(
+                    <React.Fragment>
+                        <h1>{this.state.first}곱하기{this.state.second}는?</h1>
+                        <input ref={this.onRefInput} type="number" value={this.state.value} onChange={(e) => this.setState({value: e.target.value})}/>
+                        <button onClick={this.onClick}>입력</button>
+                        <div>{this.state.result}</div>
+                    </React.Fragment>
+                )
+            }
+        }
+    </script>
+    <script type="text/babel">
+        ReactDOM.render(<GuGuDan/>, document.querySelector('#root')); 
+    </script>
+</body>
+</html>
