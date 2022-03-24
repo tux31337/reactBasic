@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js" integrity="sha512-kp7YHLxuJDJcOzStgd6vtpxr4ZU9kjn77e6dBsivSz+pUuAuMlE2UTdKB7jjsWT84qbS8kdCWHPETnP/ctrFsA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        const GuGuDan = () => {
+            const [first, setFirst] = React.useState(Math.ceil(Math.random() * 9));
+            const [second, setSecond] = React.useState(Math.ceil(Math.random() * 9));
+            const [value, setValue] = React.useState('');
+            const [result, setResult] = React.useState('');
+            const inputRef = React.useRef(null);
+
+            const onChangeInput = (e) => {
+                setValue(e.target.value);
+            }
+
+            const onAdd = (e) => {
+                if (parseInt(value) === first * second) {
+                    setResult(`정답은 ${value}`);
+                    setFirst(Math.ceil(Math.random() * 9));
+                    setSecond(Math.ceil(Math.random() * 9));
+                    setValue('');
+                    inputRef.current.focus();
+                } else {
+                    setResult(`틀렸습니다`);
+                    setValue('');
+                    inputRef.current.focus();
+                }
+            }
+            return (
+                <React.Fragment>
+                    <div>{first} 곱하기 {second}는??</div>
+                    <input ref={inputRef} onChange={onChangeInput} value={value} />
+                    <button onClick={onAdd}>입력!</button>
+                    <div>{result}</div>
+                 </React.Fragment>)
+        }
+    </script>
+    <script type="text/babel">
+        //React-hooks : 함수형 component에서도 state, ref 등을 사용할 수 있게 바꿔줌
+        ReactDOM.render(<GuGuDan/>, document.querySelector('#root')); 
+    </script>
+</body>
+</html>
